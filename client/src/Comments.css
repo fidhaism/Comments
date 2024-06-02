@@ -1,0 +1,59 @@
+.comments-container {
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 600px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .comments-header {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .comments-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .comment-item {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .comment-name {
+    font-weight: bold;
+  }
+  
+  .comment-email {
+    color: #666;
+  }
+  
+  .comment-body {
+    margin-top: 10px;
+  }
+  
+  .delete-button {
+    background-color: #ff5a5f;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .delete-button:hover {
+    background-color: #d04952;
+  }
+  
