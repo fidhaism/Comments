@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './Comments.css'; // Import CSS file for styling
+import { Pane, Heading, UnorderedList, ListItem, Text, Button, TrashIcon, Spinner, Card, majorScale } from 'evergreen-ui';
 
 const Comments = () => {
   const [comments, setComments] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchComments();
@@ -13,8 +14,10 @@ const Comments = () => {
     try {
       const response = await axios.get('http://localhost:3001/comments');
       setComments(response.data);
+      setLoading(false);
     } catch (error) {
       console.error('Error fetching comments:', error);
+      setLoading(false);
     }
   };
 
@@ -28,21 +31,54 @@ const Comments = () => {
   };
 
   return (
-    <div className="comments-container">
-      <h1 className="comments-header">Comments</h1>
-      <ul className="comments-list">
-        {comments.map(comment => (
-          <li key={comment.id} className="comment-item">
-            <div className="comment-header">
-              <p className="comment-name">{comment.name}</p>
-              <p className="comment-email">{comment.email}</p>
-            </div>
-            <p className="comment-body">{comment.body}</p>
-            <button className="delete-button" onClick={() => deleteComment(comment.id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <Pane
+      className="comments-container"
+      margin={24}
+      padding={24}
+      border="default"
+      borderRadius={4}
+      background="tint1"
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+    >
+      <Heading size={700} marginBottom={24}>Comments</Heading>
+      {loading ? (
+        <Spinner />
+      ) : (
+        <UnorderedList className="comments-list" padding={0} width="100%" maxWidth={600}>
+          {comments.map(comment => (
+            <ListItem key={comment.id} className="comment-item" padding={0} marginBottom={majorScale(3)}>
+              <Card 
+                display="flex" 
+                flexDirection="column" 
+                padding={majorScale(2)} 
+                border="muted" 
+                borderRadius={4} 
+                background="white"
+                elevation={1}
+                hoverElevation={2}
+                width="100%"
+              >
+                <Pane className="comment-header" display="flex" justifyContent="space-between" marginBottom={majorScale(1)}>
+                  <Text className="comment-name" size={500} fontWeight={500}>{comment.name}</Text>
+                  <Text className="comment-email" size={300} color="muted">{comment.email}</Text>
+                </Pane>
+                <Text className="comment-body" size={400} marginBottom={majorScale(2)}>{comment.body}</Text>
+                <Button 
+                  className="delete-button" 
+                  iconBefore={TrashIcon} 
+                  intent="danger" 
+                  onClick={() => deleteComment(comment.id)}
+                >
+                  Delete
+                </Button>
+              </Card>
+            </ListItem>
+          ))}
+        </UnorderedList>
+      )}
+    </Pane>
   );
 };
 
